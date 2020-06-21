@@ -68,14 +68,14 @@ class ViewController: UIViewController {
             holder.addSubview(Button3)
         }
         //for clear button
-        let clearButton = UIButton(frame: CGRect(x: 0, y: holder.frame.size.height-(buttonSize*5), width: view.frame.size.width, height: buttonSize))
+        let clearButton = UIButton(frame: CGRect(x: 0, y: holder.frame.size.height-(buttonSize*5), width: view.frame.size.width - buttonSize, height: buttonSize))
         clearButton.setTitleColor(.black, for: .normal)
         clearButton.backgroundColor = .white
         clearButton.setTitle("CLEAR", for: .normal)
         holder.addSubview(clearButton)
         //operations
-        let operations = ["+","-","*","/"]
-        for x in 0..<4 {
+        let operations = ["=","+","-","*","/"]
+        for x in 0..<5 {
             let Button4 = UIButton(frame: CGRect(x: buttonSize * 3, y: holder.frame.size.height-(buttonSize * CGFloat(x+1)), width: buttonSize, height: buttonSize))
             Button4.setTitleColor(.white, for: .normal)
             Button4.backgroundColor = .orange
@@ -87,9 +87,16 @@ class ViewController: UIViewController {
         resultLabel.frame = CGRect(x: 20, y: clearButton.frame.origin.y - 120.0, width: view.frame.size.width - 40, height: 100)
         holder.addSubview(resultLabel)
         
+        //Button actions
+        clearButton.addTarget(self, action: #selector(clearResult), for: .touchUpInside)
         
-    
-    
+        
     }
+        
+        
+    @objc func clearResult(){
+        resultLabel.text = "0"
+    }
+    
 
 }
