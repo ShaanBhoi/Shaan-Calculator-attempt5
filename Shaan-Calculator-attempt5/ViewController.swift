@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         label.text = "0"
         label.textColor = .white
         label.textAlignment = .right
-        label.font = UIFont(name: "Arial-Bold", size: 30)
+        label.font = UIFont(name: "Arial", size: 120)
         return label
         
     }()
@@ -84,7 +84,7 @@ class ViewController: UIViewController {
         }
     
         
-        resultLabel.frame = CGRect(x: 20, y: clearButton.frame.origin.y-100.0, width: view.frame.size.width-40, height: 100)
+        resultLabel.frame = CGRect(x: 20, y: clearButton.frame.origin.y - 120.0, width: view.frame.size.width - 40, height: 100)
         holder.addSubview(resultLabel)
         
         
