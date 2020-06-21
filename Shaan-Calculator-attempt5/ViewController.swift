@@ -41,31 +41,38 @@ class ViewController: UIViewController {
         zeroButton.setTitleColor(.black, for: .normal)
         zeroButton.backgroundColor = .white
         zeroButton.setTitle("0", for: .normal)
+        zeroButton.tag = 1
         holder.addSubview(zeroButton)
         
         //for the numbers 1,2,3
         for x in 0..<3 {
-            let Button1 = UIButton(frame: CGRect(x: buttonSize * CGFloat(x), y: holder.frame.size.height-(buttonSize * 2), width: buttonSize, height: buttonSize))
-            Button1.setTitleColor(.black, for: .normal)
-            Button1.backgroundColor = .white
-            Button1.setTitle("\(x+1)", for: .normal)
-            holder.addSubview(Button1)
+            let button1 = UIButton(frame: CGRect(x: buttonSize * CGFloat(x), y: holder.frame.size.height-(buttonSize * 2), width: buttonSize, height: buttonSize))
+            button1.setTitleColor(.black, for: .normal)
+            button1.backgroundColor = .white
+            button1.setTitle("\(x+1)", for: .normal)
+            holder.addSubview(button1)
+            button1.tag = x+2
+            button1.addTarget(self, action: #selector(numberPressed(_:)), for: .touchUpInside)
         }
         //for the numbers 4,5,6
         for x in 0..<3 {
-            let Button2 = UIButton(frame: CGRect(x: buttonSize * CGFloat(x), y: holder.frame.size.height-(buttonSize * 3), width: buttonSize, height: buttonSize))
-            Button2.setTitleColor(.black, for: .normal)
-            Button2.backgroundColor = .white
-            Button2.setTitle("\(x+4)", for: .normal)
-            holder.addSubview(Button2)
+            let button2 = UIButton(frame: CGRect(x: buttonSize * CGFloat(x), y: holder.frame.size.height-(buttonSize * 3), width: buttonSize, height: buttonSize))
+            button2.setTitleColor(.black, for: .normal)
+            button2.backgroundColor = .white
+            button2.setTitle("\(x+4)", for: .normal)
+            holder.addSubview(button2)
+            button2.tag = x+5
+            button2.addTarget(self, action: #selector(numberPressed(_:)), for: .touchUpInside)
         }
         //for the numbers 7,8,9
         for x in 0..<3 {
-            let Button3 = UIButton(frame: CGRect(x: buttonSize * CGFloat(x), y: holder.frame.size.height-(buttonSize * 4), width: buttonSize, height: buttonSize))
-            Button3.setTitleColor(.black, for: .normal)
-            Button3.backgroundColor = .white
-            Button3.setTitle("\(x+7)", for: .normal)
-            holder.addSubview(Button3)
+            let button3 = UIButton(frame: CGRect(x: buttonSize * CGFloat(x), y: holder.frame.size.height-(buttonSize * 4), width: buttonSize, height: buttonSize))
+            button3.setTitleColor(.black, for: .normal)
+            button3.backgroundColor = .white
+            button3.setTitle("\(x+7)", for: .normal)
+            holder.addSubview(button3)
+            button3.tag = x+8
+            button3.addTarget(self, action: #selector(numberPressed(_:)), for: .touchUpInside)
         }
         //for clear button
         let clearButton = UIButton(frame: CGRect(x: 0, y: holder.frame.size.height-(buttonSize*5), width: view.frame.size.width - buttonSize, height: buttonSize))
@@ -98,5 +105,15 @@ class ViewController: UIViewController {
         resultLabel.text = "0"
     }
     
-
+    @objc func numberPressed(_ sender: UIButton){
+        
+        let tag = sender.tag - 1
+        
+        if resultLabel.text == "0"{
+            resultLabel.text = "\(tag)"
+        }
+        else if let text = resultLabel.text{
+            resultLabel.text = "\(text)\(tag)"
+        }
+    }
 }
