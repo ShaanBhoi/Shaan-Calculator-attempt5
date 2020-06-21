@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     var currentOperation: Operation?
     
     enum Operation{
-        case add,subtract,multiply,divide,equal
+        case add,subtract,multiply,divide
     }
     
     private var resultLabel: UILabel = {
@@ -51,6 +51,7 @@ class ViewController: UIViewController {
         zeroButton.setTitle("0", for: .normal)
         zeroButton.tag = 1
         holder.addSubview(zeroButton)
+        zeroButton.addTarget(self, action: #selector(zeroPressed), for: .touchUpInside)
         
         //for the numbers 1,2,3
         for x in 0..<3 {
@@ -113,8 +114,18 @@ class ViewController: UIViewController {
         
     @objc func clearResult(){
         resultLabel.text = "0"
+        currentOperation = nil
+        firstNumber = 0
+        
     }
-    
+    @objc func zeroPressed(){
+        
+        if resultLabel.text != "0"{
+            if let text = resultLabel.text{
+                resultLabel.text = "\(text)\(0)"
+            }
+        }
+    }
     @objc func numberPressed(_ sender: UIButton){
         
         let tag = sender.tag - 1
@@ -131,16 +142,41 @@ class ViewController: UIViewController {
     @objc func operationPressed(_ sender: UIButton){
         let tag = sender.tag
         
-        if let text = resultLabel.text , let value = Int(text) {
+        if let text = resultLabel.text , let value = Int(text),firstNumber == 0 {
             
             firstNumber = value
-            
+            resultLabel.text = "0"
         }
         
         
         //equal
         if tag ==  1{
-            currentOperation = .equal
+            if let operation = currentOperation{
+                var secondNumber = 0
+                if let text = resultLabel.text,let value = Int(text) {
+                    secondNumber = value
+                }
+                
+                switch operation {
+                case .add:
+                    
+                    let result = firstNumber + secondNumber
+                    resultLabel.text = "\(result)"
+                    break
+                case .subtract:
+                    let result = firstNumber - secondNumber
+                    resultLabel.text = "\(result)"
+                    break
+                case .multiply:
+                    let result = firstNumber * secondNumber
+                    resultLabel.text = "\(result)"
+                    break
+                case .divide:
+                    let result = firstNumber / secondNumber
+                    resultLabel.text = "\(result)"
+                    break
+                }
+            }
             
         }
         //add
