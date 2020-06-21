@@ -12,6 +12,14 @@ class ViewController: UIViewController {
     
     @IBOutlet var holder: UIView!
     
+    var firstNumber = 0
+    var resultNumber = 0
+    var currentOperation: Operation?
+    
+    enum Operation{
+        case add,subtract,multiply,divide,equal
+    }
+    
     private var resultLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
@@ -83,11 +91,13 @@ class ViewController: UIViewController {
         //operations
         let operations = ["=","+","-","*","/"]
         for x in 0..<5 {
-            let Button4 = UIButton(frame: CGRect(x: buttonSize * 3, y: holder.frame.size.height-(buttonSize * CGFloat(x+1)), width: buttonSize, height: buttonSize))
-            Button4.setTitleColor(.white, for: .normal)
-            Button4.backgroundColor = .orange
-            Button4.setTitle(operations[x], for: .normal)
-            holder.addSubview(Button4)
+            let button4 = UIButton(frame: CGRect(x: buttonSize * 3, y: holder.frame.size.height-(buttonSize * CGFloat(x+1)), width: buttonSize, height: buttonSize))
+            button4.setTitleColor(.white, for: .normal)
+            button4.backgroundColor = .orange
+            button4.setTitle(operations[x], for: .normal)
+            holder.addSubview(button4)
+            button4.tag = x+1
+            button4.addTarget(self, action: #selector(operationPressed(_:)), for: .touchUpInside)
         }
     
         
@@ -114,6 +124,40 @@ class ViewController: UIViewController {
         }
         else if let text = resultLabel.text{
             resultLabel.text = "\(text)\(tag)"
+        }
+    }
+    
+    
+    @objc func operationPressed(_ sender: UIButton){
+        let tag = sender.tag
+        
+        if let text = resultLabel.text , let value = Int(text) {
+            
+            firstNumber = value
+            
+        }
+        
+        
+        //equal
+        if tag ==  1{
+            currentOperation = .equal
+            
+        }
+        //add
+        else if tag ==  2{
+            currentOperation = .add
+        }
+        //subtract
+        else if tag ==  3{
+            currentOperation = .subtract
+        }
+        //multiply
+        else if tag ==  4{
+            currentOperation = .multiply
+        }
+        //divide
+        else if tag ==  5{
+            currentOperation = .divide
         }
     }
 }
